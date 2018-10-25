@@ -4,13 +4,25 @@
 #include<dos.h>
 #include<graphics.h>
 void buildmap();
-
 struct Face{
 	int s_angle;
 	int e_angle;
-	Face(int a, int b);
 };
 
+struct LeftFace{
+	const static int e_angle = 135;
+	const static int s_angle = 225;
+};
+
+const struct TopFace{
+	const static int e_angle = 45;
+	const static int s_angle = 135;
+};
+
+struct BottomFace{
+	const static int e_angle = 225;
+	const static int s_angle = 315;
+};
 
 class Pacman
 {       static const int UP,DOWN,LEFT,RIGHT;
@@ -41,19 +53,19 @@ class Pacman
 		}
 	}
 	void moveLeft(){
-		int end = leftface.e_angle;
-		int start = leftface.s_angle;
+		int end = left.e_angle;
+		int start = left.s_angle;
 		int n = 0;
 		for(int i=0;i<300;i++){
 			buildmap();
-			if(end>leftface.e_angle)
+			if(a>270)
 				n++;
-			if(end<180)
+			if(a<225)
 				n++;
-			start = start + 2*pow(-1,n);
-			end = end - 2*pow(-1,n);
-			x = x-i;
-			y = y;
+			start = start - 2*pow(-1,n);
+			end = end + 2*pow(-1,n);
+			x = x;
+			y = y - i;
 			pieslice(x,y,start,end,10);
 			//pieslice(x,y+i,b,360,10);
 			getch();
@@ -64,7 +76,7 @@ class Pacman
 	void moveRight(){
 	}
 
-	void moveDown(){
+	void moveDowm(){
 	}
 	public:
 	Pacman(int x, int y){
@@ -91,11 +103,10 @@ class Pacman
 		}
 	}
 	void move(){
-		char ch;
 		while(1){
 			ch = getch();
 			switch(ch){
-				case UP:  moveUp();
+				case UP:  moveUP();
 					  break;
 				case DOWN: moveDown();
 					   break;
@@ -103,12 +114,12 @@ class Pacman
 					   break;
 				case RIGHT: moveRight();
 					    break;
-			};
+				default:
+			}
 
 		}
 	}
 };
-
 
 const Face Pacman::rightface = Face(45,315);
 const Face Pacman::leftface = Face(225,135);
