@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<conio.h>
+#include<stdlib.h>
 #include<math.h>
 #include<dos.h>
 #include<graphics.h>
@@ -25,7 +26,7 @@ class Pacman
 	const static Face bottomface;
 	//UP 1 - DOWN 2 - LEFT 3 - RIGHT 4
 
-	void checkInput(char ch){
+	void checkinput(char ch){
 		switch(ch){
 			case UP:  moveUp();
 				  break;
@@ -35,6 +36,7 @@ class Pacman
 				   break;
 			case RIGHT: moveRight();
 				    break;
+			case 'x': exit(0);
 		}
 	}
 
@@ -45,6 +47,7 @@ class Pacman
 		int n = 0;
 		char ch;
 		for(int i=0;i<300;i++){
+
 			buildmap();
 			if(start>topface.s_angle)
 				n++;
@@ -53,7 +56,7 @@ class Pacman
 			start = start - 2*pow(-1,n);
 			end = end + 2*pow(-1,n);
 			x = x;
-			y = y - i;
+			y = y - 1;
 			pieslice(x,y,start,end,10);
 			//pieslice(x,y+i,b,360,10);
 			ch = getch();
@@ -67,6 +70,7 @@ class Pacman
 		int end = leftface.e_angle;
 		int start = leftface.s_angle;
 		int n = 0;
+		char ch;
 		for(int i=0;i<300;i++){
 			buildmap();
 			if(end<leftface.e_angle)
@@ -75,9 +79,9 @@ class Pacman
 				n++;
 			start = start + 2*pow(-1,n);
 			end = end - 2*pow(-1,n);
-			x = x-i;
+			x = x-1;
 			y = y;
-			pieslice(x,y,start,end,10);
+			pieslice(x,y,end,start,10);
 			//pieslice(x,y+i,b,360,10);
 			ch = getch();
 			if(ch!=LEFT){
@@ -92,6 +96,7 @@ class Pacman
 		int end = rightface.e_angle;
 		int start = rightface.s_angle;
 		int n = 0;
+		char ch;
 		for(int i=0;i<300;i++){
 			buildmap();
 			if(end<rightface.e_angle)
@@ -100,7 +105,7 @@ class Pacman
 				n++;
 			start = start + 2*pow(-1,n);
 			end = end - 2*pow(-1,n);
-			x = x-i;
+			x = x+1;
 			y = y;
 			pieslice(x,y,start,end,10);
 			//pieslice(x,y+i,b,360,10);
@@ -117,6 +122,7 @@ class Pacman
 		int end = bottomface.e_angle;
 		int start = bottomface.s_angle;
 		int n = 0;
+		char ch;
 		for(int i=0;i<300;i++){
 			buildmap();
 			if(start>270)
@@ -126,9 +132,9 @@ class Pacman
 			start = start + 2*pow(-1,n);
 			end = end - 2*pow(-1,n);
 			x = x;
-			y = y+i;
-			pieslice(x,y,0,start,10);
-			pieslice(x,y,end,360,10);
+			y = y+1;
+			pieslice(x,y,0,end,10);
+			pieslice(x,y,start,360,10);
 
 			ch = getch();
 			if(ch!=DOWN){
