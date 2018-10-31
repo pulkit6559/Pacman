@@ -168,7 +168,8 @@ class Pacman
 
 			a = (x - 25)/stepH - 1;
 			b = (y- 25)/stepV - 1;
-			if(Points::point[y][x]==1){
+			if(Points::point[a][b]==1){
+				printf("Touch");
 				Points::point[y][x] = 0;
 				pts.draw();
 			}
@@ -249,6 +250,8 @@ class Points{
 				if(Points::point[i][j]==1){
 					//printf("TEST");
 					circle(x,y,3);
+					floodfill(x,y,WHITE);
+					setfillstyle(SOLID_FILL,YELLOW);
 				}
 			}
 		}
@@ -261,16 +264,17 @@ const int Points::N = 1;
 int Points::point[20][20];
 void Points::init_points(){
 	int i,j,r;
+	randomize();
 	for(i = 0; i<20; i++){
 		for(j=0; j<Points::N; j++){
 
-			r = random(20+1);
+			r = random(20);
 			//printf("%d",r);
 			Points::point[i][r] = 1;
 
 		}
 	}
-//	for(i = 0; i<20; i++){
+//		for(i = 0; i<20; i++){
 //		for(j=0;j<20;j++){
 //			printf("%d ", Points::point[i][j]);
 //		}
