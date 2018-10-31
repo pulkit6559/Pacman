@@ -6,4 +6,4 @@ Happy Gaming!.
 
 Future Developments:
 
-Use muiltithreading to distribute complex tasks homegenously, as currently the game runs on a single Thread.
+Use muiltithreading to distribute complex tasks homegenously, as currently the game runs on a single Thread which may cause Flicker on slower CPU's.
