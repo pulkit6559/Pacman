@@ -6,6 +6,7 @@
 #include<graphics.h>
 void buildmap();
 
+
 struct Face{
 	int s_angle;
 	int e_angle;
@@ -32,6 +33,10 @@ Window::Window(int t, int b, int l, int r){
 	RIGHT = r;
 }
 
+Window GLOBWIN = Window(25,445,25,395);
+
+const int stepV =-1* int((GLOBWIN.TOP-GLOBWIN.BOTTOM)/20)-1;
+const int stepH =-1* int((GLOBWIN.LEFT-GLOBWIN.RIGHT)/20)-1;
 
 class Pacman
 {       static const int UP,DOWN,LEFT,RIGHT;
@@ -142,13 +147,14 @@ class Pacman
 	}
 
 	void moveDown(){
-
+		Points pts;
 		int end = bottomface.e_angle;
 		int start = bottomface.s_angle;
-		int n = 0;
+		int n = 0,a,b;
 		char ch;
 		for(int i=0;i<300;i++){
 			buildmap();
+			pts.draw();
 			if(start>bottomface.s_angle)
 				n++;
 			if(start<270)
@@ -159,6 +165,13 @@ class Pacman
 			y = y+1;
 			pieslice(x,y,0,end,10);
 			pieslice(x,y,start,360,10);
+
+			a = (x - 25)/stepH - 1;
+			b = (y- 25)/stepV - 1;
+			if(Points::point[y][x]==1){
+				Points::point[y][x] = 0;
+				pts.draw();
+			}
 
 			ch = getch();
 			if(ch!=DOWN){
@@ -213,13 +226,67 @@ const int Pacman::UP = int('w');
 const int Pacman::DOWN = int('s');
 const int Pacman::LEFT = int('a');
 const int Pacman::RIGHT = int('d');
-class point{
+
+
+class Points{
+	//static int point[20][20];
+	const static int N;
+	public:
+	static int point[20][20];
+
+	static void init_points();
+
+	void draw(){
+		//printf("TEST");
+
+		//printf("%d %d",stepV,stepH);
+		int x = 0, y = 0;
+		for(int i = 0; i<20;i++){
+			for(int j= 0; j<20;j++){
+				//printf("TEST");
+				y = 25 + (i+1)*stepV;
+				x = 25 + (j+1)*stepH;
+				if(Points::point[i][j]==1){
+					//printf("TEST");
+					circle(x,y,3);
+				}
+			}
+		}
+	}
+
 
 
 };
+const int Points::N = 1;
+int Points::point[20][20];
+void Points::init_points(){
+	int i,j,r;
+	for(i = 0; i<20; i++){
+		for(j=0; j<Points::N; j++){
 
-class ghost{
+			r = random(20+1);
+			//printf("%d",r);
+			Points::point[i][r] = 1;
 
+		}
+	}
+//	for(i = 0; i<20; i++){
+//		for(j=0;j<20;j++){
+//			printf("%d ", Points::point[i][j]);
+//		}
+//		printf("\n") ;
+//	}
+}
+
+
+class Shooter{
+	static int x,y;
+
+	public:
+	Shooter(int a, int b){
+		this->x = a+5;
+		this->y = b+10;
+	}
 };
 
 class map{
@@ -236,6 +303,9 @@ void main(){
 	//delay(100);
 	buildmap();
 	Pacman p = Pacman(0,0);
+	Points pts;
+	Points::init_points();
+	pts.draw();
 	//p.init(35,35);
 	p.move();
 	//addscorecard(250,5);
