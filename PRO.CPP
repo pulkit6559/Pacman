@@ -4,11 +4,12 @@
 #include<math.h>
 #include<dos.h>
 #include<graphics.h>
-#include<string.h>
+#include<time.h>
 
 void buildmap();
 
 int score,C;
+clock_t start,stop;
 
 struct Face{
 	int s_angle;
@@ -366,8 +367,7 @@ class Shooter{
 	}
 };
 
-void *Timer(void *){
-	delay(seconds*1000);
+void Timer(){
 	cleardevice();
 	outtextxy(250,250,"TIME UP, PACMAN LOST!");
 	getch();
