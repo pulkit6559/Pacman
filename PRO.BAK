@@ -64,16 +64,17 @@ class Pacman
 
 
 	void moveUp(){
-
-		if(this->y<=PACWIN.TOP){
+		//Points pts;
+		if(this->y==PACWIN.TOP){
 			return;
 		}
 		int end = topface.e_angle;
 		int start = topface.s_angle;
-		int n = 0;
+		int n = 0,a,b;
 		char ch;
-		for(int i=0;i<300;i++){
+		while(1){
 
+			pts.draw();
 			buildmap();
 			if(start>topface.s_angle)
 				n++;
@@ -85,6 +86,13 @@ class Pacman
 			y = y - 1;
 			pieslice(x,y,start,360,10);
 			pieslice(x,y,0,end,10);
+			a = (x - 25)/stepH - 1;
+			b = (y- 25)/stepV - 1;
+			if(Points::point[b][a]==1){
+				//printf("Touch");
+				Points::point[b][a] = 0;
+				//pts.draw();
+			}
 			ch = getch();
 			if(ch!=UP){
 				cleardevice();
@@ -96,9 +104,11 @@ class Pacman
 	void moveLeft(){
 		int end = leftface.e_angle;
 		int start = leftface.s_angle;
-		int n = 0;
+		int n = 0,a,b;
+		//Points pts;
 		char ch;
 		for(int i=0;i<300;i++){
+			pts.draw();
 			buildmap();
 			if(end<leftface.e_angle)
 				n++;
@@ -110,6 +120,13 @@ class Pacman
 			y = y;
 			pieslice(x,y,start,359,10);
 			pieslice(x,y,0,end,10);
+			a = (x - 25)/stepH - 1;
+			b = (y- 25)/stepV - 1;
+			if(Points::point[b][a]==1){
+				//printf("Touch");
+				Points::point[b][a] = 0;
+				//pts.draw();
+			}
 			ch = getch();
 			if(ch!=LEFT){
 				cleardevice();
@@ -120,12 +137,13 @@ class Pacman
 	}
 
 	void moveRight(){
-
+		//Points pts;
 		int end = rightface.e_angle;
 		int start = rightface.s_angle;
-		int n = 0;
+		int n = 0,a,b;
 		char ch;
 		for(int i=0;i<300;i++){
+			pts.draw();
 			buildmap();
 			if(end>rightface.e_angle)
 				n++;
@@ -137,6 +155,13 @@ class Pacman
 			y = y;
 			pieslice(x,y,start,end,10);
 			//pieslice(x,y+i,b,360,10);
+			a = (x - 25)/stepH - 1;
+			b = (y- 25)/stepV - 1;
+			if(Points::point[b][a]==1){
+				//printf("Touch");
+				Points::point[b][a] = 0;
+				//pts.draw();
+			}
 			ch = getch();
 			if(ch!=RIGHT){
 				cleardevice();
@@ -147,7 +172,7 @@ class Pacman
 	}
 
 	void moveDown(){
-		Points pts;
+		//xPoints pts;
 		int end = bottomface.e_angle;
 		int start = bottomface.s_angle;
 		int n = 0,a,b;
@@ -168,10 +193,10 @@ class Pacman
 
 			a = (x - 25)/stepH - 1;
 			b = (y- 25)/stepV - 1;
-			if(Points::point[a][b]==1){
-				printf("Touch");
-				Points::point[y][x] = 0;
-				pts.draw();
+			if(Points::point[b][a]==1){
+				//printf("Touch");
+				Points::point[b][a] = 0;
+				//pts.draw();
 			}
 
 			ch = getch();
@@ -260,6 +285,8 @@ class Points{
 
 
 };
+Points pts;
+
 const int Points::N = 1;
 int Points::point[20][20];
 void Points::init_points(){
