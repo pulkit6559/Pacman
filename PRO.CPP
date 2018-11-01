@@ -6,6 +6,7 @@
 #include<graphics.h>
 void buildmap();
 
+int score;
 
 struct Face{
 	int s_angle;
@@ -91,6 +92,7 @@ class Pacman
 			if(Points::point[b][a]==1){
 				//printf("Touch");
 				Points::point[b][a] = 0;
+				score++;
 				//pts.draw();
 			}
 			ch = getch();
@@ -125,6 +127,7 @@ class Pacman
 			if(Points::point[b][a]==1){
 				//printf("Touch");
 				Points::point[b][a] = 0;
+				score++;
 				//pts.draw();
 			}
 			ch = getch();
@@ -160,6 +163,7 @@ class Pacman
 			if(Points::point[b][a]==1){
 				//printf("Touch");
 				Points::point[b][a] = 0;
+				score++;
 				//pts.draw();
 			}
 			ch = getch();
@@ -195,6 +199,7 @@ class Pacman
 			b = (y- 25)/stepV - 1;
 			if(Points::point[b][a]==1){
 				//printf("Touch");
+				score++;
 				Points::point[b][a] = 0;
 				//pts.draw();
 			}
@@ -282,6 +287,20 @@ class Points{
 		}
 	}
 
+	int count(){
+		int count;
+		for(int i = 0; i<Points::N;i++){
+			for(int j = 0; j<Points::N;j++){
+				if(Points::point[i][j]==1){
+					count++;
+				}
+			}
+		}
+
+		return count;
+
+	}
+
 
 
 };
@@ -337,6 +356,8 @@ void main(){
 	Points pts;
 	Points::init_points();
 	pts.draw();
+
+	int c = pts.count();
 	//p.init(35,35);
 	p.move();
 	//addscorecard(250,5);
