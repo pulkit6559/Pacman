@@ -6,7 +6,7 @@
 #include<graphics.h>
 void buildmap();
 
-int score;
+int score,C;
 
 struct Face{
 	int s_angle;
@@ -42,13 +42,17 @@ const int stepH =-1* int((GLOBWIN.LEFT-GLOBWIN.RIGHT)/20)-1;
 
 
 void checkscore(){
-	settextstyle(font, HORIZ_DIR, 1);
-	outtextxy(x, y, "Score : ");
-	gotoxy();
-	int per
-	printf("%d",per);
-	if(C==score){
 
+	settextstyle(1, HORIZ_DIR, 1);
+	outtextxy(410, 30, "Score : ");
+	int per = (C - score)/(C*1.0);
+	sprintf(msg, "%0.2f", per);
+	outtextxy(460, 30, msg);
+	if(C==score){
+		gotoxy(405,55);
+		printf("PACMAN WON !");
+		getch();
+		exit(0);
 	}
 }
 
@@ -80,7 +84,7 @@ class Pacman
 
 	void moveUp(){
 		//Points pts;
-		
+
 		int end = topface.e_angle;
 		int start = topface.s_angle;
 		int n = 0,a,b;
@@ -371,13 +375,12 @@ void main(){
 	initgraph(&gd,&gm,"C:\\TC\\BGI");
 	//line(100,100,200,200);
 	//delay(100);
+	Points::init_points();
+	C = pts.count();
 	buildmap();
 	Pacman p = Pacman(0,0);
 
-	Points::init_points();
 	pts.draw();
-
-	C = pts.count();
 	//p.init(35,35);
 	p.move();
 	//addscorecard(250,5);
@@ -391,6 +394,9 @@ void buildmap(){
 	rectangle(20,20,400,450);
 	rectangle(25,25,395,445);
 	rectangle(25,25,25+21,25+21);
+
+	rectangle(400,20,440,40);
+	checkscore();
 	setfillstyle(SOLID_FILL,YELLOW);
 	//floodfill(26,26, WHITE);
 

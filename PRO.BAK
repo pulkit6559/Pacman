@@ -6,6 +6,7 @@
 #include<graphics.h>
 void buildmap();
 
+int score,C;
 
 struct Face{
 	int s_angle;
@@ -38,6 +39,24 @@ Window GLOBWIN = Window(25,445,25,395);
 const int stepV =-1* int((GLOBWIN.TOP-GLOBWIN.BOTTOM)/20)-1;
 const int stepH =-1* int((GLOBWIN.LEFT-GLOBWIN.RIGHT)/20)-1;
 
+
+
+void checkscore(){
+
+	settextstyle(1, HORIZ_DIR, 1);
+	outtextxy(405, 35, "Score : ");
+	gotoxy(430,35);
+	int per = (C - score)/(C*1.0);
+	printf("%d",score);
+	if(C==score){
+		gotoxy(405,55);
+		printf("PACMAN WON !");
+		getch();
+		exit(0);
+	}
+}
+
+
 class Pacman
 {       static const int UP,DOWN,LEFT,RIGHT;
 	int x,y;
@@ -65,15 +84,16 @@ class Pacman
 
 	void moveUp(){
 		//Points pts;
-		if(this->y==PACWIN.TOP){
-			return;
-		}
+
 		int end = topface.e_angle;
 		int start = topface.s_angle;
 		int n = 0,a,b;
 		char ch;
 		while(1){
-
+			if (this->y == PACWIN.TOP)
+			{
+				return;
+			}
 			pts.draw();
 			buildmap();
 			if(start>topface.s_angle)
@@ -91,6 +111,8 @@ class Pacman
 			if(Points::point[b][a]==1){
 				//printf("Touch");
 				Points::point[b][a] = 0;
+				score++;
+				checkscore();
 				//pts.draw();
 			}
 			ch = getch();
@@ -125,6 +147,8 @@ class Pacman
 			if(Points::point[b][a]==1){
 				//printf("Touch");
 				Points::point[b][a] = 0;
+				score++;
+				checkscore();
 				//pts.draw();
 			}
 			ch = getch();
@@ -160,6 +184,8 @@ class Pacman
 			if(Points::point[b][a]==1){
 				//printf("Touch");
 				Points::point[b][a] = 0;
+				score++;
+				checkscore();
 				//pts.draw();
 			}
 			ch = getch();
@@ -195,7 +221,9 @@ class Pacman
 			b = (y- 25)/stepV - 1;
 			if(Points::point[b][a]==1){
 				//printf("Touch");
+				score++;
 				Points::point[b][a] = 0;
+				checkscore();
 				//pts.draw();
 			}
 
@@ -282,6 +310,20 @@ class Points{
 		}
 	}
 
+	int count(){
+		int count;
+		for(int i = 0; i<Points::N;i++){
+			for(int j = 0; j<Points::N;j++){
+				if(Points::point[i][j]==1){
+					count++;
+				}
+			}
+		}
+
+		return count;
+
+	}
+
 
 
 };
@@ -325,6 +367,7 @@ class map{
 
 };
 
+
 void main(){
 	int i,gd = DETECT, gm;
 	clrscr();
@@ -332,10 +375,11 @@ void main(){
 	initgraph(&gd,&gm,"C:\\TC\\BGI");
 	//line(100,100,200,200);
 	//delay(100);
+	Points::init_points();
+	C = pts.count();
 	buildmap();
 	Pacman p = Pacman(0,0);
-	Points pts;
-	Points::init_points();
+
 	pts.draw();
 	//p.init(35,35);
 	p.move();
@@ -350,6 +394,9 @@ void buildmap(){
 	rectangle(20,20,400,450);
 	rectangle(25,25,395,445);
 	rectangle(25,25,25+21,25+21);
+
+	rectangle(400,20,440,40);
+	checkscore();
 	setfillstyle(SOLID_FILL,YELLOW);
 	//floodfill(26,26, WHITE);
 
