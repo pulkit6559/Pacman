@@ -4,6 +4,7 @@
 #include<math.h>
 #include<dos.h>
 #include<graphics.h>
+#include<string.h>
 
 void buildmap();
 
@@ -47,10 +48,12 @@ void checkscore(){
 	//settextstyle(1, HORIZ_DIR, 1);
 	//outtextxy(410, 30, "Score : ");
 	int per = (score)/(C*1.0) * 100;
-	msg = to_string(per);
+	//printf("%d",per);
+	sprintf(msg,"%d %",per);
 	outtextxy(480, 30, msg);
 	if(C==score){
 		gotoxy(405,55);
+
 		printf("PACMAN WON !");
 		getch();
 		exit(0);
@@ -363,11 +366,13 @@ class Shooter{
 	}
 };
 
-class map{
-
-
-};
-
+void Timer(int seconds){
+	delay(seconds*1000);
+	cleardevice();
+	outtextxy(250,250,"TIME UP, PACMAN LOST!");
+	getch();
+	exit(0);
+}
 
 void main(){
 	int i,gd = DETECT, gm;
