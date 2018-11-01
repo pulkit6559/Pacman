@@ -366,7 +366,7 @@ class Shooter{
 	}
 };
 
-void Timer(int seconds){
+void *Timer(void *){
 	delay(seconds*1000);
 	cleardevice();
 	outtextxy(250,250,"TIME UP, PACMAN LOST!");
