@@ -42,12 +42,12 @@ const int stepH =-1* int((GLOBWIN.LEFT-GLOBWIN.RIGHT)/20)-1;
 
 
 void checkscore(){
-
-	settextstyle(1, HORIZ_DIR, 1);
-	outtextxy(405, 35, "Score : ");
-	gotoxy(430,35);
+	char msg[6];
+	//settextstyle(1, HORIZ_DIR, 1);
+	//outtextxy(410, 30, "Score : ");
 	int per = (C - score)/(C*1.0);
-	printf("%d",score);
+	sprintf(msg, "%0.2f", &per);
+	outtextxy(480, 30, msg);
 	if(C==score){
 		gotoxy(405,55);
 		printf("PACMAN WON !");
@@ -394,8 +394,8 @@ void buildmap(){
 	rectangle(20,20,400,450);
 	rectangle(25,25,395,445);
 	rectangle(25,25,25+21,25+21);
-
-	rectangle(400,20,440,40);
+	settextstyle(1, HORIZ_DIR, 1);
+	outtextxy(410, 30, "Score : ");
 	checkscore();
 	setfillstyle(SOLID_FILL,YELLOW);
 	//floodfill(26,26, WHITE);
