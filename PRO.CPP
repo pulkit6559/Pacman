@@ -201,6 +201,7 @@ class Pacman
 				//printf("Touch");
 				score++;
 				Points::point[b][a] = 0;
+				checkscore();
 				//pts.draw();
 			}
 
@@ -344,6 +345,7 @@ class map{
 
 };
 
+
 void main(){
 	int i,gd = DETECT, gm;
 	clrscr();
@@ -353,11 +355,11 @@ void main(){
 	//delay(100);
 	buildmap();
 	Pacman p = Pacman(0,0);
-	Points pts;
+
 	Points::init_points();
 	pts.draw();
 
-	int c = pts.count();
+	C = pts.count();
 	//p.init(35,35);
 	p.move();
 	//addscorecard(250,5);
