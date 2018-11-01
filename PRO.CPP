@@ -39,6 +39,20 @@ Window GLOBWIN = Window(25,445,25,395);
 const int stepV =-1* int((GLOBWIN.TOP-GLOBWIN.BOTTOM)/20)-1;
 const int stepH =-1* int((GLOBWIN.LEFT-GLOBWIN.RIGHT)/20)-1;
 
+
+
+void checkscore(){
+	settextstyle(font, HORIZ_DIR, 1);
+	outtextxy(x, y, "Score : ");
+	gotoxy();
+	int per
+	printf("%d",per);
+	if(C==score){
+
+	}
+}
+
+
 class Pacman
 {       static const int UP,DOWN,LEFT,RIGHT;
 	int x,y;
@@ -66,15 +80,16 @@ class Pacman
 
 	void moveUp(){
 		//Points pts;
-		if(this->y==PACWIN.TOP){
-			return;
-		}
+		
 		int end = topface.e_angle;
 		int start = topface.s_angle;
 		int n = 0,a,b;
 		char ch;
 		while(1){
-
+			if (this->y == PACWIN.TOP)
+			{
+				return;
+			}
 			pts.draw();
 			buildmap();
 			if(start>topface.s_angle)
@@ -93,6 +108,7 @@ class Pacman
 				//printf("Touch");
 				Points::point[b][a] = 0;
 				score++;
+				checkscore();
 				//pts.draw();
 			}
 			ch = getch();
@@ -128,6 +144,7 @@ class Pacman
 				//printf("Touch");
 				Points::point[b][a] = 0;
 				score++;
+				checkscore();
 				//pts.draw();
 			}
 			ch = getch();
@@ -164,6 +181,7 @@ class Pacman
 				//printf("Touch");
 				Points::point[b][a] = 0;
 				score++;
+				checkscore();
 				//pts.draw();
 			}
 			ch = getch();
