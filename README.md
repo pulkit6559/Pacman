@@ -11,7 +11,7 @@ Add levels to the game
 Use muiltithreading to distribute complex tasks homegenously, as currently the game runs on a single Thread which may cause Flicker on slower CPU's.
 
 
-# SOP
+
 
 This game was made primary using standard C graphics library ie. <graphics.h>
 
